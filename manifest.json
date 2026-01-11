@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "AI周报生成器",
+  "version": "1.0.0",
+  "description": "智能生成专业周报，支持多种行业风格",
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AI周报生成器"
+  },
+  
+  "permissions": [
+    "storage"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  }
+}

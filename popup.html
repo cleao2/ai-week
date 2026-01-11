@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI周报生成器</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-top">
+                <h1><i class="fas fa-robot"></i> <span id="app-title">AI周报生成器</span></h1>
+                <div class="language-switcher">
+                    <button id="lang-zh" class="lang-btn active" data-lang="zh-CN">中文</button>
+                    <button id="lang-en" class="lang-btn" data-lang="en-US">English</button>
+                </div>
+            </div>
+            <p class="subtitle" id="app-subtitle">快速生成专业周报</p>
+        </header>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="completed-work">
+                        <i class="fas fa-check-circle"></i> <span id="completed-work-label">本周完成的工作</span>
+                    </label>
+                    <textarea id="completed-work" placeholder="- 完成了用户登录模块开发&#10;- 修复了3个线上bug&#10;- 参加了团队技术分享会" rows="3"></textarea>
+                    <div class="hint" id="completed-work-hint">每项一行，以"- "开头</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="problems">
+                        <i class="fas fa-exclamation-triangle"></i> <span id="problems-label">遇到的问题（可选）</span>
+                    </label>
+                    <textarea id="problems" placeholder="- 服务器偶尔响应慢&#10;- 测试环境不稳定" rows="2"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="plans">
+                        <i class="fas fa-calendar-alt"></i> <span id="plans-label">下周计划（可选）</span>
+                    </label>
+                    <textarea id="plans" placeholder="- 开发支付模块&#10;- 优化数据库查询性能" rows="2"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="style-select">
+                        <i class="fas fa-palette"></i> <span id="style-label">行业风格</span>
+                    </label>
+                    <select id="style-select">
+                        <option value="internet">互联网风格</option>
+                        <option value="stateOwned">国企风格</option>
+                        <option value="foreign">外企风格</option>
+                        <option value="government">体制内风格</option>
+                        <option value="freelancer">自由职业者</option>
+                    </select>
+                    <div class="style-description" id="style-description">
+                        数据驱动、敏捷迭代、技术术语
+                    </div>
+                </div>
+
+
+                <div class="button-group">
+                    <button id="generate-btn" class="btn-primary">
+                        <i class="fas fa-magic"></i> <span id="generate-btn-text">生成周报</span>
+                    </button>
+                    <button id="demo-btn" class="btn-secondary">
+                        <i class="fas fa-play-circle"></i> <span id="demo-btn-text">演示数据</span>
+                    </button>
+                    <button id="clear-btn" class="btn-outline">
+                        <i class="fas fa-trash-alt"></i> <span id="clear-btn-text">清空</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading-section" id="loading-section" style="display: none;">
+                <div class="loading-spinner">
+                    <i class="fas fa-cog fa-spin"></i>
+                </div>
+                <p class="loading-text" id="loading-text">AI正在生成周报...</p>
+            </div>
+
+            <div class="result-section" id="result-section" style="display: none;">
+                <div class="result-header">
+                    <h3><i class="fas fa-file-alt"></i> <span id="result-title">生成的周报</span></h3>
+                    <div class="result-meta">
+                        <span id="report-style"></span>
+                    </div>
+                </div>
+                
+                <div class="report-content" id="report-content">
+                    <!-- 周报内容将在这里显示 -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="copy-btn" class="btn-success">
+                        <i class="fas fa-copy"></i> <span id="copy-btn-text">复制</span>
+                    </button>
+                    <button id="download-btn" class="btn-info">
+                        <i class="fas fa-download"></i> <span id="download-btn-text">下载</span>
+                    </button>
+                    <button id="regenerate-btn" class="btn-outline">
+                        <i class="fas fa-redo"></i> <span id="regenerate-btn-text">重新生成</span>
+                    </button>
+                </div>
+            </div>
+
+        <div class="status-section" id="status-section">
+            <div class="status-item">
+                <i class="fas fa-history" id="history-status-icon"></i>
+                <span id="history-status-text">历史记录: 0条</span>
+            </div>
+            <div class="status-item" id="ai-status-item" style="display: none;">
+                <i class="fas fa-brain" style="color: #6f42c1;"></i>
+                <span id="ai-status-text">AI模式</span>
+            </div>
+            <div class="status-item" id="local-status-item">
+                <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                <span id="local-status-text">本地运行</span>
+            </div>
+        </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer-links">
+                <a href="#" id="open-web">打开完整版</a> | 
+                <a href="#" id="settings">设置</a> | 
+                <a href="#" id="help">帮助</a>
+            </p>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="ai-generator.js"></script>
+    <script src="ai-service-simple.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
