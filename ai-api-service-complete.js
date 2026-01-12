@@ -326,7 +326,7 @@ class OpenRouterProvider {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`,
-                'HTTP-Referer': 'https://github.com/cleao2/ai_week',
+                'HTTP-Referer': 'https://github.com/cleao2/ai_weekly_report',
                 'X-Title': 'AI Weekly Report Generator'
             },
             body: JSON.stringify({
