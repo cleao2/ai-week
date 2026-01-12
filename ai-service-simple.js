@@ -95,7 +95,7 @@ class SimpleAIService {
                 headers = {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.config.apiKey}`,
-                    'HTTP-Referer': 'https://https://github.com/cleao2/ai_week.com/ai-weekly-report',
+                    'HTTP-Referer': 'https://github.com/cleao2/ai_week',
                     'X-Title': 'AI Weekly Report Generator'
                 };
                 body = {
@@ -437,7 +437,7 @@ Requirements:
                     headers = {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${this.config.apiKey}`,
-                        'HTTP-Referer': 'https://https://github.com/cleao2/ai_week.com/ai-weekly-report',
+                        'HTTP-Referer': 'https://github.com/cleao2/ai_week',
                         'X-Title': 'AI Weekly Report Generator'
                     };
                     body = {
